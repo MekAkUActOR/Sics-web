@@ -15,23 +15,23 @@ def window(req):
 
 
 def mulval(req):
-    shutil.rmtree('./mulvala2b/src/mulvalsrc')
-    os.mkdir('./mulvala2b/src/mulvalsrc')
+    shutil.rmtree('./MulVAL2B/src/mulvalsrc')
+    os.mkdir('./MulVAL2B/src/mulvalsrc')
     print("data: ", req.POST)
     print("file:", req.FILES)
     if req.method == "POST":
         file = req.FILES.get("upload", None)
         if not file:
             return render(req, "mulval.html", {"errinf":"No files for upload!"})
-        f = open("./mulvala2b/src/mulvalsrc/input.P", 'wb')
+        f = open("./MulVAL2B/src/mulvalsrc/input.P", 'wb')
         for line in file.chunks():      # 分块写入
             f.write(line)
         f.close()
     root = os.getcwd()
-    path = root + "/mulvala2b/src/mulvalsrc"
+    path = root + "/MulVAL2B/src/mulvalsrc"
     if os.system("cd "+ path + " && ls && graph_gen.sh input.P -v"):
         return redirect('/mulval/mulvalerror1/')
-    elif os.path.exists('./mulvala2b/src/mulvalsrc/AttackGraph.pdf'):
+    elif os.path.exists('./MulVAL2B/src/mulvalsrc/AttackGraph.pdf'):
         return redirect('/mulval/mulvalsuccess/')
     else:
         return redirect('/mulval/mulvalerror2/')
@@ -48,8 +48,8 @@ def mulvalerror2(req):
 
 
 def download(req):
-    if os.path.exists('./mulvala2b/src/mulvalsrc/AttackGraph.pdf'):
-        pdfFileObj = open('./mulvala2b/src/mulvalsrc/AttackGraph.pdf', 'rb')
+    if os.path.exists('./MulVAL2B/src/mulvalsrc/AttackGraph.pdf'):
+        pdfFileObj = open('./MulVAL2B/src/mulvalsrc/AttackGraph.pdf', 'rb')
         response = HttpResponse(pdfFileObj.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="AttackGraph.pdf"'
         return response
@@ -61,8 +61,8 @@ def a2b(req):
         aim = req.POST.get("Attack Goal", None)
         print(aim)
         A2B(aim)
-        if os.path.exists('./mulvala2b/src/mulvalsrc/result.dot.pdf'):
-            pdfFileObj = open('./mulvala2b/src/mulvalsrc/result.dot.pdf', 'rb')
+        if os.path.exists('./MulVAL2B/src/mulvalsrc/result.dot.pdf'):
+            pdfFileObj = open('./MulVAL2B/src/mulvalsrc/result.dot.pdf', 'rb')
             response = HttpResponse(pdfFileObj.read(), content_type='application/pdf')
             response['Content-Disposition'] = 'attachment; filename="BAG.pdf"'
             return response

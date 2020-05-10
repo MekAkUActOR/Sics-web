@@ -205,7 +205,7 @@ def DigraphAnalysis(graph, aim):
 
 def CVSSCal(cveid):
     '''根据CVE查询AV、AC、AU'''
-    file = './mulvala2b/src/cveid.xls'
+    file = './MulVAL2B/src/cveid.xls'
     data = xlrd.open_workbook(file)
     table = data.sheets()[0]
     cve = table.col_values(0)
@@ -607,7 +607,7 @@ def ObservList(attack_pathlist):
 
 def aimSel():
     aimlist = []
-    path = "./mulvala2b/src/mulvalsrc/AttackGraph.xml"
+    path = "./MulVAL2B/src/mulvalsrc/AttackGraph.xml"
     try:
         graph = readXML(path)
         for nod in graph.nodgrp:
@@ -619,7 +619,7 @@ def aimSel():
         return aimlist
 
 def A2B(aim):
-    path2 = "./mulvala2b/src/mulvalsrc/AttackGraph.xml"
+    path2 = "./MulVAL2B/src/mulvalsrc/AttackGraph.xml"
     graph = readXML(path2)
     if isAimExist(graph, aim):
         print("Aim doesn't exist!")
@@ -631,9 +631,9 @@ def A2B(aim):
 
     dot = dotGener(graph)
     print(dot.source)
-    dot.render('./mulvala2b/src/mulvalsrc/output-graph.dot')
+    dot.render('./MulVAL2B/src/mulvalsrc/output-graph.dot')
     
     result = resultGener(attack_pathlist)
     print(result.source)
-    result.render('./mulvala2b/src/mulvalsrc/result.dot')
+    result.render('./MulVAL2B/src/mulvalsrc/result.dot')
     return 0
